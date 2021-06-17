@@ -1,0 +1,26 @@
+.user__add {
+  width: 150px;
+  height: 50px;
+  background-image: url('../../../images/add-button.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 22px;
+  border-radius: 2px;
+}
+
+@media (max-width: 800px) {
+  .user__add {
+    width: 75%;
+    min-width: 282px;
+    margin-top: 36px;
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center;
+  }
+}
+
+@media (max-width: 525px) {
+  .user__add {
+    background-size: 16px;
+  }
+}

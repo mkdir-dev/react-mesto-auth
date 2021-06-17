@@ -1,0 +1,21 @@
+.footer__copyright {
+  margin: 66px 0px 60px;
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+  text-decoration: none;
+  -webkit-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.footer__copyright:hover {
+  opacity: .6;
+}
+
+@media (max-width: 525px) {
+  .footer__copyright {
+    font-size: 14px;
+    line-height: normal;
+  }
+}

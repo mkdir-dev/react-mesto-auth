@@ -1,0 +1,23 @@
+.user__avatar {
+  width: 120px;
+  height: 120px;
+  background-image: url("../../../images/Cousteau.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  transition: all 0.2s ease-out;
+}
+
+.user__avatar:hover {
+  opacity: 0.2;
+}
+
+@media (max-width: 525px) {
+  .user__avatar {
+    margin-right: 0;
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center;
+  }
+}
