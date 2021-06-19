@@ -1,9 +1,12 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import api from '../utils/api'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 import Header from './Header'
 import Main from './Main'
+import Register from './Register'
+import Login from './Login'
 import Footer from './Footer'
 import EditAvatarPopup from './EditAvatarPopup'
 import EditProfilePopup from './EditProfilePopup'
@@ -114,15 +117,31 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
-        <Main
-          onPopupAvatar={handleEditAvatarClick}
-          onPopupEdit={handleEditProfileClick}
-          onPopupAdd={handleAddPlaceClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          cards={cards}
-        />
+
+        <main>
+          <Route exact path='/'>
+            <Main
+              onPopupAvatar={handleEditAvatarClick}
+              onPopupEdit={handleEditProfileClick}
+              onPopupAdd={handleAddPlaceClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              cards={cards}
+            />
+          </Route>
+
+          <Route path='/sign-up'>
+            <Register />
+          </Route>
+
+          <Route path='/sign-in'>
+            <Login />
+          </Route>
+        </main>
+
+
+
         <Footer />
 
         <EditAvatarPopup
