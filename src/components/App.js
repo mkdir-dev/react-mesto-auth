@@ -118,29 +118,25 @@ function App() {
       <div className="page">
         <Header />
 
-        <main>
-          <Route exact path='/'>
-            <Main
-              onPopupAvatar={handleEditAvatarClick}
-              onPopupEdit={handleEditProfileClick}
-              onPopupAdd={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-              cards={cards}
-            />
-          </Route>
+        <Route exact path='/'>
+          <Main
+            onPopupAvatar={handleEditAvatarClick}
+            onPopupEdit={handleEditProfileClick}
+            onPopupAdd={handleAddPlaceClick}
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+            cards={cards}
+          />
+        </Route>
 
-          <Route path='/sign-up'>
-            <Register />
-          </Route>
+        <Route path='/sign-up'>
+          <Register />
+        </Route>
 
-          <Route path='/sign-in'>
-            <Login />
-          </Route>
-        </main>
-
-
+        <Route path='/sign-in'>
+          <Login />
+        </Route>
 
         <Footer />
 

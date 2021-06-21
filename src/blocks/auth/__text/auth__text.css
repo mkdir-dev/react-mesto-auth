@@ -1,0 +1,13 @@
+.auth__text {
+  margin: 15px auto 0;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #fff;
+}
+
+@media (max-width: 525px) {
+  .auth__text {
+    margin: 20px auto 0;
+  }
+}
