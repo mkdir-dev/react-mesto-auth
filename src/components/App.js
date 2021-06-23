@@ -1,8 +1,9 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import api from '../utils/api'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
+import ProtectedRoute from './ProtectedRoute'
 import Header from './Header'
 import Main from './Main'
 import Register from './Register'
@@ -21,6 +22,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null)
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([])
+  const [loggedIn] = React.useState(false)
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -118,17 +120,18 @@ function App() {
       <div className="page">
         <Header />
 
-        <Route exact path='/'>
-          <Main
-            onPopupAvatar={handleEditAvatarClick}
-            onPopupEdit={handleEditProfileClick}
-            onPopupAdd={handleAddPlaceClick}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-            cards={cards}
-          />
-        </Route>
+        <ProtectedRoute
+          path='/'
+          component={Main}
+          loggedIn={loggedIn}
+          onPopupAvatar={handleEditAvatarClick}
+          onPopupEdit={handleEditProfileClick}
+          onPopupAdd={handleAddPlaceClick}
+          onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          cards={cards}
+        />
 
         <Route path='/sign-up'>
           <Register />
@@ -138,28 +141,38 @@ function App() {
           <Login />
         </Route>
 
+        <Route>
+          {loggedIn ? <Redirect to='/' /> : <Redirect to='sign-in' />}
+        </Route>
+
         <Footer />
 
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        />
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-        />
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
-        />
-        <PopupConfirm />
-        <ImagePopup
-          card={selectedCard}
-          onClose={closeAllPopups}
-        />
+        {loggedIn &&
+          <>
+            <EditAvatarPopup
+              isOpen={isEditAvatarPopupOpen}
+              onClose={closeAllPopups}
+              onUpdateAvatar={handleUpdateAvatar}
+            />
+            <EditProfilePopup
+              isOpen={isEditProfilePopupOpen}
+              onClose={closeAllPopups}
+              onUpdateUser={handleUpdateUser}
+            />
+            <AddPlacePopup
+              isOpen={isAddPlacePopupOpen}
+              onClose={closeAllPopups}
+              onAddPlace={handleAddPlaceSubmit}
+            />
+            <PopupConfirm />
+            <ImagePopup
+              card={selectedCard}
+              onClose={closeAllPopups}
+            />
+          </>
+        }
+
+
 
       </div>
     </CurrentUserContext.Provider>
