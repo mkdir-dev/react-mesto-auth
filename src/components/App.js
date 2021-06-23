@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import api from '../utils/api'
+import * as auth from '../utils/auth'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 import ProtectedRoute from './ProtectedRoute'
@@ -115,6 +116,14 @@ function App() {
       })
   }
 
+  function handleRegister(email, password) {
+    return auth.register(email, password)
+      .then(res => {
+        // dsf
+        console.log(res.json())
+      })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -134,7 +143,9 @@ function App() {
         />
 
         <Route path='/sign-up'>
-          <Register />
+          <Register
+            onRegister={handleRegister}
+          />
         </Route>
 
         <Route path='/sign-in'>
