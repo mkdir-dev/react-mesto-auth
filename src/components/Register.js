@@ -34,6 +34,7 @@ function Register(props) {
           minLength="2"
           required
           onInput={handleChangeEmail}
+          value={email}
         />
         <input
           className="auth__input"
@@ -44,6 +45,7 @@ function Register(props) {
           minLength="6"
           required
           onInput={handleChangePassword}
+          value={password}
         />
         <button
           className="auth__button-submit"
