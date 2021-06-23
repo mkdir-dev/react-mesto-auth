@@ -15,6 +15,7 @@ import EditProfilePopup from './EditProfilePopup'
 import AddPlacePopup from './AddPlacePopup'
 import PopupConfirm from './PopupConfirm'
 import ImagePopup from './ImagePopup'
+import InfoTooltip from './InfoTooltip'
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
@@ -182,7 +183,7 @@ function App() {
             />
           </>
         }
-
+        <InfoTooltip />
 
 
       </div>
