@@ -25,6 +25,8 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([])
   const [loggedIn] = React.useState(false)
+  const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = React.useState(false)
+  const [isSuccessRegistration, setSuccessRegistration] = React.useState(false)
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -57,6 +59,7 @@ function App() {
     setEditAvatarPopupOpen(false)
     setEditProfilePopupOpen(false)
     setAddPlacePopupOpen(false)
+    setInfoTooltipPopupOpen(false)
     setSelectedCard(null)
   }
 
@@ -121,7 +124,15 @@ function App() {
     return auth.register(email, password)
       .then(res => {
         // dsf
-        console.log(res.json())
+        //console.log(res.json())
+        if (res) {
+          // console.log(res.json())
+          setSuccessRegistration(true)
+          setInfoTooltipPopupOpen(true)
+        } else {
+          setSuccessRegistration(false)
+          setInfoTooltipPopupOpen(false)
+        }
       })
   }
 
@@ -183,7 +194,11 @@ function App() {
             />
           </>
         }
-        <InfoTooltip />
+        <InfoTooltip
+          isOpen={isInfoTooltipPopupOpen}
+          onClose={closeAllPopups}
+          isRegistration={isSuccessRegistration}
+        />
 
 
       </div>
