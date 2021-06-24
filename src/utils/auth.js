@@ -18,3 +18,18 @@ export function register(email, password) {
   })
     .then(res => fixRes(res))
 }
+
+export function authorization(email, password) {
+  return fetch(`${BASE_URL}/sign-in`, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      password: password,
+      email: email
+    })
+  })
+    .then(res => fixRes(res))
+}

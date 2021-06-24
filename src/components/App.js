@@ -24,7 +24,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null)
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([])
-  const [loggedIn] = React.useState(false)
+  const [loggedIn, setloggedIn] = React.useState(false)
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = React.useState(false)
   const [isSuccessRegistration, setSuccessRegistration] = React.useState(false)
 
@@ -136,6 +136,15 @@ function App() {
       })
   }
 
+  function handleLogin(email, password) {
+    return auth.authorization(email, password)
+      .then(res => {
+        if (res) {
+          setloggedIn(true)
+        }
+      })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -161,7 +170,9 @@ function App() {
         </Route>
 
         <Route path='/sign-in'>
-          <Login />
+          <Login
+            onLogin={handleLogin}
+          />
         </Route>
 
         <Route>
