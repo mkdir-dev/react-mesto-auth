@@ -32,7 +32,7 @@ function Login(props) {
           placeholder="Email"
           minLength="2"
           required
-          onInput={handleChangeEmail}
+          onChange={handleChangeEmail}
           value={email}
         />
         <input
@@ -43,7 +43,7 @@ function Login(props) {
           placeholder="Пароль"
           minLength="6"
           required
-          onInput={handleChangePassword}
+          onChange={handleChangePassword}
           value={password}
         />
         <button

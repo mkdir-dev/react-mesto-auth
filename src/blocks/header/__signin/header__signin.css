@@ -1,0 +1,14 @@
+.header__signin {
+  display: block;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.2s ease-out;
+}
+
+.header__signin:hover {
+  opacity: 0.6;
+}

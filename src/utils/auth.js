@@ -5,31 +5,40 @@ function fixRes(res) {
 }
 
 export function register(email, password) {
-  return fetch(`${BASE_URL}/sign-up`, {
+  return fetch(`${BASE_URL}/signup`, {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     method: 'POST',
     body: JSON.stringify({
-      password: password,
-      email: email
+      password, email
     })
   })
     .then(res => fixRes(res))
 }
 
 export function authorization(email, password) {
-  return fetch(`${BASE_URL}/sign-in`, {
+  return fetch(`${BASE_URL}/signin`, {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     method: 'POST',
     body: JSON.stringify({
-      password: password,
-      email: email
+      password, email
     })
+  })
+    .then(res => fixRes(res))
+}
+
+export function getToken(token) {
+  return fetch(`${BASE_URL}/users/me`, {
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": `Bearer ${token}`
+    },
+    method: 'GET',
   })
     .then(res => fixRes(res))
 }

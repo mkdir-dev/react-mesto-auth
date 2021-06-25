@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, useHistory } from 'react-router-dom'
 import api from '../utils/api'
 import * as auth from '../utils/auth'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
@@ -24,9 +24,21 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null)
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([])
-  const [loggedIn, setloggedIn] = React.useState(false)
+  const [loggedIn, setLoggedIn] = React.useState(false)
+  const [userEmail, setUserEmail] = React.useState('')
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = React.useState(false)
   const [isSuccessRegistration, setSuccessRegistration] = React.useState(false)
+  const history = useHistory()
+
+  React.useEffect(() => {
+    checkToken()
+  }, [loggedIn])
+
+  React.useEffect(() => {
+    if (loggedIn) {
+      history.push('/')
+    }
+  }, [loggedIn, history])
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -123,32 +135,63 @@ function App() {
   function handleRegister(email, password) {
     return auth.register(email, password)
       .then(res => {
-        // dsf
-        //console.log(res.json())
-        if (res) {
-          // console.log(res.json())
-          setSuccessRegistration(true)
-          setInfoTooltipPopupOpen(true)
-        } else {
-          setSuccessRegistration(false)
-          setInfoTooltipPopupOpen(false)
-        }
+        localStorage.setItem('token', res.token)
+        setInfoTooltipPopupOpen(true)
+        history.push('/sign-in')
+      })
+      .catch(() => {
+        setInfoTooltipPopupOpen(true)
+        setSuccessRegistration(false)
+      })
+      .catch(err => {
+        console.log(`Не удалось зарегистрироваться. Ошибка: ${err}.`)
       })
   }
 
   function handleLogin(email, password) {
     return auth.authorization(email, password)
       .then(res => {
-        if (res) {
-          setloggedIn(true)
-        }
+        localStorage.setItem('token', res.token)
+        setLoggedIn(true)
+        history.push('/')
       })
+      .catch(err => {
+        console.log(`Не удалось войти. Ошибка: ${err}.`)
+      })
+  }
+
+  function checkToken() {
+    const token = localStorage.getItem('token')
+    if (token) {
+      auth.getToken(token)
+        .then(res => {
+          setUserEmail(res.data.email)
+          setLoggedIn(true)
+        })
+        .catch(err => {
+          console.log(`Не удалось передать токен. Ошибка: ${err}.`)
+        })
+    } else {
+      console.log('Нет токена - потерялся')
+      return
+    }
+  }
+
+  function hendleSignOut() {
+    localStorage.removeItem('token')
+    setLoggedIn(false)
+    setUserEmail('')
+    history.push('/sihn-in')
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header />
+        <Header
+          userEmail={userEmail}
+          loggedIn={loggedIn}
+          onSignOut={hendleSignOut}
+        />
 
         <ProtectedRoute
           path='/'
@@ -205,13 +248,13 @@ function App() {
             />
           </>
         }
-        <InfoTooltip
-          isOpen={isInfoTooltipPopupOpen}
-          onClose={closeAllPopups}
-          isRegistration={isSuccessRegistration}
-        />
-
-
+        {isInfoTooltipPopupOpen &&
+          <InfoTooltip
+            isOpen={isInfoTooltipPopupOpen}
+            onClose={closeAllPopups}
+            isRegistration={isSuccessRegistration}
+          />
+        }
       </div>
     </CurrentUserContext.Provider>
   )
