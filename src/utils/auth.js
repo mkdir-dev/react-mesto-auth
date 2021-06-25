@@ -4,6 +4,7 @@ function fixRes(res) {
   return res.ok ? res.json() : Promise.reject(`Произошла ошибка: ${res.status}`)
 }
 
+
 export function register(email, password) {
   return fetch(`${BASE_URL}/signup`, {
     headers: {

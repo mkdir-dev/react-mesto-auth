@@ -31,6 +31,7 @@ const popupAvatar = '.popup_type_avatar';
 const popupAdd = '.popup_type_add';
 const popupConfirm = '.popup_type_confirm';
 
+
 export {
   validSelector,
   popupFormAdd,

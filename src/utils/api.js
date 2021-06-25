@@ -22,6 +22,7 @@ class Api {
       .then(res => this._fixPromise(res))
   }
 
+  // получить данные карточек
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       method: 'GET',
