@@ -39,6 +39,7 @@ function AddPlacePopup(props) {
         id="title-place"
         name="title-place"
         type="text"
+        value={title || ''}
         placeholder="Название"
         minLength="2"
         maxLength="30"
@@ -49,6 +50,7 @@ function AddPlacePopup(props) {
         id="link-place"
         name="link-place"
         type="url"
+        value={link || ''}
         placeholder="Ссылка на картинку"
         minLength="2"
         onChange={handleChangeLink}

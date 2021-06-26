@@ -5,8 +5,7 @@ function Header(props) {
   return (
     <header className="header">
       <Link className="header__logo"
-        href="/"
-        target="_blank"
+        to="/"
         rel="noreferrer">
       </Link>
       <div className='header__auth'>

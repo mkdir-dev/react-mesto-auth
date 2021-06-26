@@ -18,16 +18,16 @@ import ImagePopup from './ImagePopup'
 import InfoTooltip from './InfoTooltip'
 
 function App() {
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false)
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
   const [selectedCard, setSelectedCard] = React.useState(null)
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([])
   const [loggedIn, setLoggedIn] = React.useState(false)
   const [userEmail, setUserEmail] = React.useState('')
-  const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = React.useState(false)
-  const [isSuccessRegistration, setSuccessRegistration] = React.useState(false)
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false)
+  const [isSuccessRegistration, setIsSuccessRegistration] = React.useState(false)
   const history = useHistory()
 
   React.useEffect(() => {
@@ -52,15 +52,15 @@ function App() {
   }, [])
 
   function handleEditAvatarClick() {
-    setEditAvatarPopupOpen(true)
+    setIsEditAvatarPopupOpen(true)
   }
 
   function handleEditProfileClick() {
-    setEditProfilePopupOpen(true)
+    setIsEditProfilePopupOpen(true)
   }
 
   function handleAddPlaceClick() {
-    setAddPlacePopupOpen(true)
+    setIsAddPlacePopupOpen(true)
   }
 
   function handleCardClick(card) {
@@ -68,10 +68,10 @@ function App() {
   }
 
   function closeAllPopups() {
-    setEditAvatarPopupOpen(false)
-    setEditProfilePopupOpen(false)
-    setAddPlacePopupOpen(false)
-    setInfoTooltipPopupOpen(false)
+    setIsEditAvatarPopupOpen(false)
+    setIsEditProfilePopupOpen(false)
+    setIsAddPlacePopupOpen(false)
+    setIsInfoTooltipPopupOpen(false)
     setSelectedCard(null)
   }
 
@@ -136,12 +136,12 @@ function App() {
     return auth.register(email, password)
       .then(res => {
         localStorage.setItem('token', res.token)
-        setInfoTooltipPopupOpen(true)
+        setIsInfoTooltipPopupOpen(true)
         history.push('/sign-in')
       })
       .catch(() => {
-        setInfoTooltipPopupOpen(true)
-        setSuccessRegistration(false)
+        setIsInfoTooltipPopupOpen(true)
+        setIsSuccessRegistration(false)
       })
       .catch(err => {
         console.log(`Не удалось зарегистрироваться. Ошибка: ${err}.`)
@@ -248,7 +248,7 @@ function App() {
             />
           </>
         }
-        {isInfoTooltipPopupOpen &&
+        {
           <InfoTooltip
             isOpen={isInfoTooltipPopupOpen}
             onClose={closeAllPopups}
